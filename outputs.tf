@@ -17,9 +17,3 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = module.eks.cluster_name
 }
-
-
-output "service_loadbalancer" {
-  description = "dashbaord service info"
-  value = data.external.dashboard_service.result
-}
