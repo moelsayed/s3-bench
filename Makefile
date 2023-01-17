@@ -21,6 +21,10 @@ destroy:
 validate:
 	terraform validate
 
+.PHONY: fmt
+fmt:
+	terraform fmt
+
 .PHONY: build-image
 build-image:
 	docker build -t ${REPO}/s3-bench:latest deploy/

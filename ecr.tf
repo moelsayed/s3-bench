@@ -6,7 +6,6 @@ module "public_ecr" {
   repository_name = "s3-bench"
   repository_type = "private"
 
-#   repository_read_write_access_arns = ["arn:aws:iam::012345678901:role/terraform"]
   repository_read_write_access_arns = ["${data.aws_caller_identity.current.arn}"]
   repository_lifecycle_policy = jsonencode({
     rules = [
@@ -33,6 +32,6 @@ module "public_ecr" {
   }
 
   tags = {
-    Terraform   = "true"
+    Terraform = "true"
   }
 }
