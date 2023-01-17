@@ -5,9 +5,9 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.24"
 
-  vpc_id                         = module.vpc.vpc_id
-  subnet_ids                     = module.vpc.private_subnets
-  cluster_endpoint_public_access = true
+  vpc_id                                       = module.vpc.vpc_id
+  subnet_ids                                   = module.vpc.private_subnets
+  cluster_endpoint_public_access               = true
   node_security_group_enable_recommended_rules = true
   eks_managed_node_group_defaults = {
     ami_type = "AL2_x86_64"
@@ -44,7 +44,7 @@ resource "helm_release" "aws-load-balancer-controller" {
 
   set {
     name  = "clusterName"
-    value = "${module.eks.cluster_name}"
+    value = module.eks.cluster_name
   }
 }
 

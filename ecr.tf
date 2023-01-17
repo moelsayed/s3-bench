@@ -3,9 +3,9 @@
 module "public_ecr" {
   source = "terraform-aws-modules/ecr/aws"
 
-  repository_name = "s3-bench"
-  repository_type = "private"
-
+  repository_name                   = "s3-bench"
+  repository_type                   = "private"
+  repository_force_delete           = "true"
   repository_read_write_access_arns = ["${data.aws_caller_identity.current.arn}"]
   repository_lifecycle_policy = jsonencode({
     rules = [
