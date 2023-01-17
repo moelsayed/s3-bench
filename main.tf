@@ -9,17 +9,10 @@ data "aws_availability_zones" "available" {}
 data "aws_caller_identity" "current" {}
 
 locals {
-  cluster_name = "education-eks-${random_string.suffix.result}"
+  cluster_name = "s3bench-eks-${random_string.suffix.result}"
 }
 
 resource "random_string" "suffix" {
   length  = 8
   special = false
-}
-
-
-resource "null_resource" "update_kubeconfig" {
-  provisioner "local-exec" {
-    command = "aws eks update-kubeconfig --region ${var.region} --name ${module.eks.cluster_name}"
-  }
 }

@@ -23,7 +23,7 @@ output "registry_url" {
 }
 
 output "bucket_name" {
-  value = module.s3_bucket.s3_bucket_arn
+  value = module.s3_bucket.s3_bucket_id
 }
 
 output "s3_user" {
