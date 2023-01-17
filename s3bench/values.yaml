@@ -83,6 +83,7 @@ affinity: {}
 
 
 s3benchConfig:
+  image: ""
   endpoint: "https://s3.amazonaws.com"
   accessKey: 
   secretKey: 

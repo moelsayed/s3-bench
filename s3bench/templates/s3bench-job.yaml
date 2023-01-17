@@ -18,7 +18,7 @@ spec:
             while true; do sleep 2; curl -s http://elasticsearch:9200 -o /dev/null && exit 0 ; done
 
       containers:
-        - image: shonpaz123/s3bench
+        - image: {{ .Values.s3benchConfig.image }}
           name: s3bench
           args:
                ["--endpoint-url", {{ .Values.s3benchConfig.endpoint | quote }},

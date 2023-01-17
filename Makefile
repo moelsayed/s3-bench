@@ -45,7 +45,8 @@ build-image:
 .PHONY: push-image
 push-image:		## push test image, You must `make provision` first.
 push-image:
-	docker push  `terraform output --raw registry_url`/s3-bench:latest
+	@aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin `terraform output --raw registry_url
+	docker push  `terraform output --raw registry_url`:latest
 
 .PHONY: helm-deploy
 helm-deploy:		## install the s3bench deployment. You must `make provision` first
@@ -53,7 +54,8 @@ helm-deploy:
 	@helm upgrade --install s3bench s3bench/ \
 	--set s3benchConfig.accessKey=`terraform output --raw s3_user_key` \
 	--set s3benchConfig.secretKey=`terraform output --raw s3_user_access_key` \
-	--set s3benchConfig.bucketName=`terraform output --raw bucket_name`
+	--set s3benchConfig.bucketName=`terraform output --raw bucket_name` \
+	--set s3benchConfig.image=`terraform output --raw registry_url`:latest
 
 .PHONY: helm-undeploy
 helm-undeploy:		## uninstall the s3bench deployment
