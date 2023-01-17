@@ -17,3 +17,25 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = module.eks.cluster_name
 }
+
+output "registry_url" {
+  value = module.public_ecr.repository_url
+}
+
+output "bucket_name" {
+  value = module.s3_bucket.s3_bucket_arn
+}
+
+output "s3_user" {
+  value = aws_iam_user.s3bench.name
+}
+
+output "s3_user_key" {
+  value     = aws_iam_access_key.s3bench.id
+  sensitive = true
+}
+
+output "s3_user_access_key" {
+  value     = aws_iam_access_key.s3bench.secret
+  sensitive = true
+}
