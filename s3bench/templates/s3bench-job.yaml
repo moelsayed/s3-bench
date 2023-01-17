@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: s3bench
+spec:
+  parallelism: 5
+  template:
+    metadata: 
+      name: s3bench
+    spec:
+      initContainers:
+        - image: curlimages/curl
+          name: elastic-check
+          args:
+          - /bin/sh
+          - -c
+          - |
+            while true; do sleep 2; curl -s http://elasticsearch:9200 -o /dev/null && exit 0 ; done
+
+      containers:
+        - image: shonpaz123/s3bench
+          name: s3bench
+          args:
+               ["--endpoint-url", {{ .Values.s3benchConfig.endpoint | quote }},
+                "--access-key", {{ .Values.s3benchConfig.accessKey | quote }}, 
+                "--secret-key", {{ .Values.s3benchConfig.secretKey | quote }},
+                "--bucket", {{ .Values.s3benchConfig.bucketName | quote }},
+                "--object-size", {{ .Values.s3benchConfig.objectSize | quote }}, 
+                "--num-objects", {{ .Values.s3benchConfig.objectCount | quote }},
+                "--workload", {{ .Values.s3benchConfig.workloadType | quote }},
+                "--cleanup", {{ .Values.s3benchConfig.cleanup | quote  }},
+                "--elastic-url", "http://elasticsearch:9200"]
+      restartPolicy: Never

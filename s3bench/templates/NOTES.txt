@@ -1,0 +1,5 @@
+1. Get the Kibana URL by running these commands:
+  NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+  You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w kibana'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} kibana --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  echo http://$SERVICE_IP:5601
